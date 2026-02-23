@@ -1,5 +1,3 @@
-# motor_control.py（修改后的完整代码）
-
 import serial
 import struct
 import time

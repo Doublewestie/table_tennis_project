@@ -81,8 +81,8 @@ def fit_and_predict(traj: List[Tuple[float, float]], target_x: float,
 
         # 计算速度方向与 X 轴夹角 (弧度)
         # 速度向量近似为 ( -1, slope )，因为 x 递减
-        angle = np.arctan2(slope, -1)   # 实际方向角
-        return y_pred, angle
+        angle_pred = np.arctan2(slope, -1)   # 实际的预测方向角
+        return y_pred, angle_pred
     except Exception as e:
         print(f"拟合失败: {e}")
         return None, None
