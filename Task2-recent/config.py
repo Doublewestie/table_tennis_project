@@ -12,9 +12,9 @@ BLOCK = True
 NON_BLOCK = False
 
 # ========== 坐标系 ==========
-COORD_BASE = 0   # 基坐标系/当前用户坐标系
+COORD_BASE = 0   # 用户坐标系设置
+COORD_TOOL = 3   # 工具坐标系设置
 COORD_JOINT = 1  # 关节空间
-COORD_TOOL = 2   # 工具坐标系
 
 # ========== 机器人默认参数 ==========
 DEFAULT_ROBOT_IP = "192.168.56.101"   # 请根据实际修改

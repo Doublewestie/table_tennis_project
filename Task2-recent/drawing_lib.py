@@ -22,6 +22,15 @@ def secure_boot(ip=config.DEFAULT_ROBOT_IP):
     print(f"--机器人 [{ip}] 已连接并上电使能--")
     return robot
 
+def set_tool_and_user_frame(robot, user_id, tool_id):
+    ret = robot.set_user_frame_id(user_id)
+    if ret[0] != 0:
+        print("设置用户坐标系失败")
+    ret = robot.set_tool_id(tool_id)
+    if ret[0] != 0:
+        print("设置工具坐标系失败")
+    print(f"工具坐标系 ID={tool_id}，用户坐标系 ID={user_id} 已激活")
+
  # 安全关机：下使能→断电→登出，每一步均检查状态并打印结果
 def safe_shutdown(robot):
     for act, name in [(robot.disable_robot, "下使能"),

@@ -11,6 +11,8 @@ def main():
     # 1. 连接机器人
     print("\n========== 连接机器人ing ==========")
     robot = dl.secure_boot(config.DEFAULT_ROBOT_IP)
+        # 初始化工具和用户坐标系    
+    dl.set_tool_and_user_frame(robot, user_id=config.COORD_BASE, tool_id=config.COORD_TOOL)
     time.sleep(2)   # 等待系统稳定
     print("\n========== 原点初始化ing ==========")
     dl.return_to_the_origin(robot)
