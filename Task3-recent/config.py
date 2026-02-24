@@ -37,14 +37,20 @@ JOINT_SET=[  -0.871*np.pi/180,
              52.936*np.pi/180, 
            -181.071*np.pi/180]
 
-# ========== 轨迹拟合参数 ==========
-SPLIT_THRESHOLD = 500       # 轨迹分割的 X 突变阈值
-FIT_METHOD = 'quadratic'    # 拟合方法：linear / quadratic / cubic
-FIT_X_LIMIT = 1500          # 只使用 x < 1500 的数据进行拟合（避免远端噪声）
+# ========== 轨迹分割参数 ==========
+SPLIT_THRESHOLD = 500       # X 突变阈值，用于区分不同轨迹
+
+# ========== 轨迹预测v2参数==========
+WEIGHT_QUAD = 0.825          # 二次回归的权重（线性回归权重为 1-WEIGHT_QUAD）
+
+# 三轮精确定位的 X 范围（单位：mm）
+STAGE1_RANGE = (1600, 2150)   # 初步调整阶段
+STAGE2_RANGE = (1000, 1550)   # 第二轮调整
+STAGE3_RANGE = (400, 700)     # 第三轮最终调整
 
 # ========== 电机参数 ==========
 '''真实电机参数,仿真时无效'''
-MOTOR_PORT = "COM3"         # 翎控电机串口号（Windows 示例）
+MOTOR_PORT = "COM3"         # 翎控电机串口号
 MOTOR_BAUDRATE = 115200     # 默认波特率
 MOTOR_ID = 1                # 电机 ID（默认 1）
 

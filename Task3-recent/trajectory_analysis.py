@@ -1,5 +1,6 @@
 """
-轨迹分析与预测模块
+轨迹分析与预测模块（增强版）
+支持指定数据范围拟合，并实现线性与二次回归的加权组合。
 """
 
 import re
@@ -34,10 +35,15 @@ def split_trajectories(points: List[Tuple[float, float]],
     return trajectories
 
 def fit_and_predict(traj: List[Tuple[float, float]], target_x: float,
-                    method: str = config.FIT_METHOD,
-                    x_limit: Optional[float] = config.FIT_X_LIMIT):
+                    x_range: Optional[Tuple[float, float]] = None):
     """
     对轨迹进行拟合，返回预测的 y 值和切线角度 (弧度)
+    使用线性与二次回归的加权组合（权重 config.WEIGHT_QUAD）
+
+    :param traj: 轨迹点列表
+    :param target_x: 目标 X 坐标
+    :param x_range: 可选，指定拟合数据范围 (x_min, x_max)，若为 None 则使用全部数据
+    :return: (y_pred, angle_pred) 或 (None, None)
     """
     # 按 x 排序
     sorted_traj = sorted(traj, key=lambda p: p[0])
@@ -45,14 +51,15 @@ def fit_and_predict(traj: List[Tuple[float, float]], target_x: float,
     ys = np.array([p[1] for p in sorted_traj])
 
     # 数据筛选
-    if x_limit is not None:
-        mask = xs < x_limit
+    if x_range is not None:
+        x_min, x_max = x_range
+        mask = (xs >= x_min) & (xs <= x_max)
         if np.sum(mask) >= 3:
             xs_fit = xs[mask]
             ys_fit = ys[mask]
         else:
-            xs_fit = xs
-            ys_fit = ys
+            print(f"  警告: 范围 {x_range} 内点数不足 (实际 {np.sum(mask)} 个)，无法拟合")
+            return None, None
     else:
         xs_fit = xs
         ys_fit = ys
@@ -61,30 +68,30 @@ def fit_and_predict(traj: List[Tuple[float, float]], target_x: float,
         return None, None
 
     try:
-        if method == 'linear':
-            coeffs = np.polyfit(xs_fit, ys_fit, 1)
-            a, b = coeffs
-            y_pred = a * target_x + b
-            slope = a
-        elif method == 'quadratic':
-            coeffs = np.polyfit(xs_fit, ys_fit, 2)
-            a, b, c = coeffs
-            y_pred = a * target_x**2 + b * target_x + c
-            slope = 2 * a * target_x + b
-        elif method == 'cubic':
-            coeffs = np.polyfit(xs_fit, ys_fit, 3)
-            a, b, c, d = coeffs
-            y_pred = a * target_x**3 + b * target_x**2 + c * target_x + d
-            slope = 3 * a * target_x**2 + 2 * b * target_x + c
-        else:
-            raise ValueError(f"未知拟合方法: {method}")
+        # 线性回归
+        coeffs_lin = np.polyfit(xs_fit, ys_fit, 1)
+        a_lin, b_lin = coeffs_lin
+        y_lin = a_lin * target_x + b_lin
+        slope_lin = a_lin
+
+        # 二次回归
+        coeffs_quad = np.polyfit(xs_fit, ys_fit, 2)
+        a_quad, b_quad, c_quad = coeffs_quad
+        y_quad = a_quad * target_x**2 + b_quad * target_x + c_quad
+        slope_quad = 2 * a_quad * target_x + b_quad
+
+        # 加权组合
+        w = config.WEIGHT_QUAD
+        y_pred = w * y_quad + (1 - w) * y_lin
+        slope = w * slope_quad + (1 - w) * slope_lin
 
         # 计算速度方向与 X 轴夹角 (弧度)
         # 速度向量近似为 ( -1, slope )，因为 x 递减
-        angle_pred = np.arctan2(slope, -1)   # 实际的预测方向角
+        angle_pred = np.arctan2(slope, -1)
+
         return y_pred, angle_pred
     except Exception as e:
-        print(f"拟合失败: {e}")
+        print(f"  拟合失败: {e}")
         return None, None
 
 def find_actual_point(traj: List[Tuple[float, float]], target_x: float) -> Optional[Tuple[float, float]]:
