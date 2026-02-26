@@ -93,28 +93,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-'''drawing_lib的伴生废案'''
-'''
-elif choice == '3':
-            print("\n========== 任务3：绘制圆形 ==========")
-            print("            请选择绘制方法")
-            print(" 1. 分段绘制")
-            print(" 2. 整段绘制")
-            print("="*40)
-            option=input("请输入数字选择方法: ")
-            if option == '1':
-                dl.draw_circle_arc_segment(robot, center_x=350, center_y=0, z=450, radius=100, segments=4)
-                time.sleep(1)
-                dl.return_to_the_origin(robot)
-                time.sleep(1)
-            else:
-                dl.draw_circle_arc_whole(robot, center_x=350, center_y=0, z=450, radius=100)
-                time.sleep(1)
-                dl.return_to_the_origin(robot)
-                time.sleep(1)
-'''
