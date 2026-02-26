@@ -12,9 +12,10 @@ def print_menu():
     print("\n" + "="*40)
     print("          请选择要执行的任务")
     print("="*40)
-    print(" 1. 绘制平行于球网的横线")
-    print(" 2. 绘制正方形")
-    print(" 3. 绘制圆形")
+    print(" 1. 分段绘制平行于球网的横线")
+    print(" 2. 整段段绘制平行于球网的横线")
+    print(" 3. 绘制正方形")
+    print(" 4. 分段绘制圆形")
     print(" 0. 退出程序")
     print("="*40)
 
@@ -35,20 +36,37 @@ def main():
         choice = input("请输入数字选择任务: ").strip()
 
         if choice == '1':
-            print("\n========== 任务1：绘制横线 ==========")
-            dl.draw_horizontal_line(robot, x_fixed=350, y_start=-226.6, y_end=226.6, z_fixed=400)
+            print("\n========== 任务1：分段绘制横线 ==========")
+            dl.draw_horizontal_line(robot, 
+                                    x_fixed=350, y_start=-405, y_end=-226,z_fixed=400,r_x=45,r_y=45,
+                                    start_pose=config.joint_pose_1)
+            time.sleep(1)
+            dl.draw_horizontal_line(robot, 
+                                    x_fixed=350, y_start=226, y_end=226,z_fixed=400,r_x=0,r_y=0,
+                                    start_pose=config.joint_pose_2)
+            time.sleep(1)
+            dl.draw_horizontal_line(robot, 
+                                    x_fixed=350, y_start=226, y_end=400,z_fixed=400,r_x=-45,r_y=45,
+                                    start_pose=config.joint_pose_3)
             time.sleep(1)
             dl.return_to_the_origin(robot)
             time.sleep(1)
 
-        elif choice == '2':
-            print("\n========== 任务2：绘制正方形 ==========")
+        if choice == '2':
+            print("\n========== 任务2：整段段绘制横线 ==========")
+            dl.draw_horizontal_line(robot, 
+                                    x_fixed=350, y_start=-405, y_end=400,z_fixed=400,r_x=-45,r_y=45,
+                                    start_pose=config.joint_pose_1)
+
+        elif choice == '3':
+            print("\n========== 任务3：绘制正方形 ==========")
             dl.draw_square(robot, x=350, center_y=0, center_z=450, side_len=200)
             time.sleep(1)
             dl.return_to_the_origin(robot)
             time.sleep(1)
 
-        elif choice == '3':
+        elif choice == '4':
+            print("\n========== 任务4：分段绘制圆形 ==========")
             dl.draw_circle_arc_segment(robot, center_x=350, center_y=0, z=450, radius=100, segments=4)
             time.sleep(1)
             dl.return_to_the_origin(robot)

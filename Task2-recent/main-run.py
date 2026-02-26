@@ -37,7 +37,7 @@ def main():
     # 2-2. 整段绘制平行于球网的横线（假设球网法向为 X 轴，横线沿 Y 轴）
     print("\n========== 任务1-2：整段绘制横线 ==========")
     dl.draw_horizontal_line(robot, 
-                            x_fixed=350, y_start=-405.873, y_end=400,z_fixed=400,r_x=-45,r_y=45,
+                            x_fixed=350, y_start=-405, y_end=400,z_fixed=400,r_x=-45,r_y=45,
                             start_pose=config.joint_pose_1)
     time.sleep(1)
     dl.return_to_the_origin(robot)
