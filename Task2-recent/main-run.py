@@ -42,7 +42,7 @@ def main():
     time.sleep(1)
     dl.return_to_the_origin(robot)
     time.sleep(1)
-    """
+
     # 3. 绘制正方形（中心位于 [400,50,350]，边长 80mm）
     print("\n========== 任务2：绘制正方形 ==========")
     dl.draw_square(robot, x=350, center_y=0, center_z=450, side_len=200)
@@ -56,7 +56,7 @@ def main():
     time.sleep(1)
     dl.return_to_the_origin(robot)
     time.sleep(1)
-"""    
+
     # 5. 断开连接
     print("\n========== 断连机器人ing ==========")
     dl.safe_shutdown(robot)
