@@ -53,34 +53,26 @@ def return_to_the_origin(robot,joint_speed=config.DEFAULT_LINEAR_SPEED):
         print("--原点回归就位--")
 
  # 绘制直线
-def draw_horizontal_line(robot, x_fixed, y_start, y_end, z_fixed,
+def draw_horizontal_line(robot, x_fixed, y_start, y_end, z_fixed,r_x,r_y,start_pose,
                          linear_speed=config.DEFAULT_LINEAR_SPEED,
                          joint_speed=config.DEFAULT_LINEAR_SPEED,):
     """
-    绘制水平横线（沿 Y 轴）
+    绘制一段水平横线（沿 Y 轴）
     """
-     # 导入初始关节位置
-    start_pose = [-33.676*math.pi/180,
-                   85.372*math.pi/180,
-                   -5.429*math.pi/180,
-                      0.0*math.pi/180,
-                  -79.944*math.pi/180,
-                   33.676*math.pi/180]
-    
      # 关节运动至初始位置，并检查状态
     ret = robot.joint_move(start_pose, config.ABS, config.BLOCK, joint_speed)
     if ret[0] != 0:
-        raise Exception("*移动到横线起点失败")
+        raise Exception("*移动到该段横线起点失败")
     else:
-        print("*成功移动到横线起点")
+        print("*成功移动到该段横线起点")
     
      # 直线运动，并检查状态
-    end_pose = [x_fixed, y_end, z_fixed, 0, 0, 0]
+    end_pose = [x_fixed, y_end, z_fixed, r_x, r_y, 0]
     ret = robot.linear_move(end_pose, config.ABS, config.BLOCK, linear_speed)
     if ret[0] != 0:
-        print("*横线绘制失败")
+        print("*该段横线绘制失败")
     else:
-        print(f"--横线绘制过程完成： X={x_fixed} , Z={z_fixed} ; 从 Y={y_start} 到 Y={y_end}--")
+        print(f"--该段横线绘制过程完成： X={x_fixed} , Z={z_fixed} ; 从 Y={y_start} 到 Y={y_end}--")
 
  # 绘制正方形
 def draw_square(robot, x, center_y, center_z, side_len,
