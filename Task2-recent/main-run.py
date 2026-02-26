@@ -50,9 +50,16 @@ def main():
     dl.return_to_the_origin(robot)
     time.sleep(1)
 
-    # 4. 绘制圆形（圆心位于 [350,0,450]，半径100，4段圆弧）
-    print("\n========== 任务3：绘制圆形 ==========")
+    # 4-1. 绘制圆形（圆心位于 [350,0,450]，半径100，4段圆弧）
+    print("\n========== 任务3-1：分段绘制圆形 ==========")
     dl.draw_circle_arc_segment(robot, center_x=350, center_y=0, z=450, radius=100,segments=4)
+    time.sleep(1)
+    dl.return_to_the_origin(robot)
+    time.sleep(1)
+
+    # 4-2. 绘制圆形（圆心位于 [350,0,450]，半径100，4段圆弧）
+    print("\n========== 任务3：整段绘制圆形 ==========")
+    dl.draw_circle_arc_whole(robot, center_x=350, center_y=0, z=450, radius=100)
     time.sleep(1)
     dl.return_to_the_origin(robot)
     time.sleep(1)

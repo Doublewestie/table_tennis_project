@@ -16,6 +16,7 @@ def print_menu():
     print(" 2. 整段段绘制平行于球网的横线")
     print(" 3. 绘制正方形")
     print(" 4. 分段绘制圆形")
+    print(" 5. 整段绘制圆形")
     print(" 0. 退出程序")
     print("="*40)
 
@@ -68,6 +69,13 @@ def main():
         elif choice == '4':
             print("\n========== 任务4：分段绘制圆形 ==========")
             dl.draw_circle_arc_segment(robot, center_x=350, center_y=0, z=450, radius=100, segments=4)
+            time.sleep(1)
+            dl.return_to_the_origin(robot)
+            time.sleep(1)
+
+        elif choice == '5':
+            print("\n========== 任务5：整段段绘制圆形 ==========")
+            dl.draw_circle_arc_whole(robot, center_x=350, center_y=0, z=450, radius=100)
             time.sleep(1)
             dl.return_to_the_origin(robot)
             time.sleep(1)

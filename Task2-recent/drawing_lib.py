@@ -164,12 +164,6 @@ def draw_circle_arc_segment(robot, center_x, center_y, z, radius,segments,
         start_angle = end_angle
     print("*圆形绘制过程完成")
 
-
-
-
-
-'''以下为废案，暂时不想改，又弃之可惜'''
-'''
  # 使用扩展圆弧指令绘制圆形（平行于 YZ 平面）
 def draw_circle_arc_whole(robot, center_x, center_y, z, radius,
                          joint_speed=config.DEFAULT_ARC_SPEED, 
@@ -177,11 +171,11 @@ def draw_circle_arc_whole(robot, center_x, center_y, z, radius,
                          arc_acc=config.DEFAULT_ARC_ACC):
     print(f"--开始一次性绘制整个圆形--")
     start_angle=draw_circle_arc_origin(robot,joint_speed)
-    angle_step = 2 * math.pi / 4
+    angle_step = math.pi / 4
 
     # 整段段绘制圆弧
-    end_angle = 4 * angle_step
-    mid_angle = start_angle + angle_step / 2.0
+    end_angle = 3 * angle_step
+    mid_angle = start_angle + angle_step
 
     mid_pos = [center_x,
                center_y + radius * math.cos(mid_angle),
@@ -201,4 +195,3 @@ def draw_circle_arc_whole(robot, center_x, center_y, z, radius,
         print(f"*整段圆弧绘制成功")
     start_angle = end_angle
     print("-圆形绘制过程完成-")
-'''
