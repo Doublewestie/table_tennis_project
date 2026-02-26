@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乒乓球机器人比赛技术员手册</title>
+    <style>
+        :root {
+            --primary-green: #2e8b57;
+            --light-green: #8fbc8f;
+            --lighter-green: #c1e1c1;
+            --bg-gradient: linear-gradient(135deg, #f5fff5 0%, #e8f5e8 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 12px rgba(46, 139, 87, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--bg-gradient);
+            padding: 20px 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--lighter-green);
+        }
+        
+        h1 {
+            color: var(--primary-green);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--lighter-green);
+        }
+        
+        h2 {
+            color: var(--primary-green);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--light-green);
+            display: flex;
+            align-items: center;
+        }
+        
+        h2:before {
+            content: "•";
+            color: var(--primary-green);
+            font-size: 1.8rem;
+            margin-right: 10px;
+        }
+        
+        h3 {
+            color: #444;
+            font-size: 1.1rem;
+            margin: 20px 0 10px;
+            padding-left: 10px;
+            border-left: 3px solid var(--light-green);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ol, ul {
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .source {
+            font-size: 0.85rem;
+            color: #666;
+            background-color: rgba(143, 188, 143, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 5px;
+            border-left: 3px solid var(--light-green);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .note {
+            background-color: rgba(255, 255, 200, 0.3);
+            border-left: 4px solid #ffcc00;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+        
+        .problem-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border: 1px solid rgba(193, 225, 193, 0.5);
+        }
+        
+        .problem-title {
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .problem-title:before {
+            content: "▶";
+            color: var(--primary-green);
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .solution-list {
+            padding-left: 20px;
+        }
+        
+        .solution-list li {
+            margin-bottom: 12px;
+        }
+        
+        code {
+            background-color: rgba(143, 188, 143, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 0.9rem;
+            padding: 20px 0;
+            margin-top: 20px;
+            border-top: 1px solid var(--lighter-green);
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            section {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            .problem-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>乒乓球机器人比赛技术员手册</h1>
+        <p class="subtitle">2025中国机器人大赛暨RoboCup机器人世界杯中国赛 · 2D技能项目</p>
+    </header>
+    
+    <section id="task-a">
+        <h2>a. 启动比赛平台过程中对裁判电脑的相关操作</h2>
+        
+        <p>按逻辑先后顺序的操作流程：</p>
+        
+        <ol>
+            <li>
+                <div><span class="step-number">1</span><strong>启动视觉软件（pingpong-vision）</strong></div>
+                <p>打开终端，进入视觉软件安装目录（例如 <code>/Documents/pingpong-vision-master/</code>）。运行命令 <code>./bin/vision</code> 启动视觉软件图形界面。</p>
+                <div class="source">
+                    <strong>出处：</strong>文件6《乒乓球机器人比赛平台-用户手册V1.0.pdf》第4.2.3节（第29-30页），描述视觉软件运行方法；第5.3.5节（第44页）提到验证软件时运行 <code>./bin/vision</code>。
+                </div>
+            </li>
+            
+            <li>
+                <div><span class="step-number">2</span><strong>配置视觉参数（可选，若未提前标定）</strong></div>
+                <p>在视觉软件界面中完成相机标定、颜色分割、Mask设定等。运行命令行工具 <code>./bin/client</code> 验证小球坐标输出是否正常。</p>
+                <div class="source">
+                    <strong>出处：</strong>文件6第5.3.2-5.3.5节（第40-45页），描述相机标定、颜色分割、Mask设定和验证步骤；第5.3.5节（第44页）提到运行 <code>./bin/client</code> 查看小球坐标。
+                </div>
+            </li>
+            
+            <li>
+                <div><span class="step-number">3</span><strong>启动裁判盒软件（ssl-game-controller）</strong></div>
+                <p>打开另一个终端，进入裁判盒软件安装目录（例如 <code>/Documents/ssl-game-controller-master/</code>）。运行命令 <code>./ssl-game-controller</code> 启动裁判盒服务。终端将显示类似 <code>http://127.0.0.1:8080</code> 的地址，复制该地址到浏览器打开裁判盒网页界面。</p>
+                <div class="source">
+                    <strong>出处：</strong>文件6第4.3.2节（第32-34页），描述裁判盒软件的运行和界面访问方法。
+                </div>
+            </li>
+            
+            <li>
+                <div><span class="step-number">4</span><strong>在裁判盒界面开始比赛</strong></div>
+                <p>在裁判盒网页界面中点击 <strong>"START NEW MATCH"</strong> 开始新比赛。在 <strong>"COMMANDS"</strong> 命令界面中，通过点击按钮发送比赛指令（例如 <strong>"STOP"</strong>、<strong>"FREEKICK"</strong> 等）。</p>
+                <div class="source">
+                    <strong>出处：</strong>文件6第6.3节（第48-50页），描述裁判盒开始比赛和命令界面操作；文件7《乒乓球机器人平台技术与演示.pdf》第26-27页（第26-27页）描述裁判盒指令和界面。
+                </div>
+            </li>
+            
+            <li>
+                <div><span class="step-number">5</span><strong>监控视觉数据与裁判指令</strong></div>
+                <p>确保参赛队电脑能通过UDP组播接收视觉数据（地址 <code>224.5.23.2:10006</code>）和裁判指令（地址 <code>224.5.23.1:10003</code>）。</p>
+                <div class="source">
+                    <strong>出处：</strong>文件1《21赛事规则.乒乓球机器人-2D技能项目.2025中国机器人大赛暨RoboCup机器人世界杯中国赛.pdf》第6.3.3节（第10页）列出组播地址和端口；文件7第29页（第29页）描述通讯协议。
+                </div>
+            </li>
+        </ol>
+        
+        <div class="note">
+            <strong>注意：</strong>所有答案均严格依据提供的文件内容，未添加任何外部信息或修改。
+        </div>
+    </section>
+    
+    <section id="task-b">
+        <h2>b. 末端电机绿色指示灯熄灭的可能原因及排查办法</h2>
+        
+        <div class="problem-item">
+            <div class="problem-title">1. 电源故障（电机未上电或电源适配器异常）</div>
+            <p><strong>排查办法：</strong>检查24V电机电源适配器连接是否松动，输出是否正常。检查电源线是否损坏，确保电机V+、V-端子电压为24V。</p>
+            <div class="source">
+                <strong>出处：</strong>文件6第3.6节（第21-24页）描述末端电机电源连接；文件4《翎控电机RS485手册.pdf》第1页（第1页）提到电机输入电压范围。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">2. RS485通讯故障（USB转485接口松动或驱动问题）</div>
+            <p><strong>排查办法：</strong>检查USB转485线缆是否插紧，尝试更换USB端口。在设备管理器（Windows）或 <code>lsusb</code> 命令（Linux）中检查端口号，确认驱动已安装。使用电机调试软件（如K-TECH）测试通讯是否正常。</p>
+            <div class="source">
+                <strong>出处：</strong>文件6第5.2.3节（第37-38页）描述电机端口号查询和调试软件使用；文件4第3页（第3页）描述RS485总线参数。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">3. 电机错误状态（过温、过流、低压保护等）</div>
+            <p><strong>排查办法：</strong>通过RS485发送读取电机状态命令（命令字节 <code>0x9A</code>）获取错误标志。根据错误标志位判断具体故障（如温度、电压异常），并采取相应措施（如冷却、调整电源）。发送清除错误标志命令（命令字节 <code>0x9B</code>）尝试恢复。</p>
+            <div class="source">
+                <strong>出处：</strong>文件4第9-10页（第9-10页）描述读取电机状态1和错误标志命令、清除错误标志命令；第11页（第11页）描述错误状态位含义。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">4. 电机未使能或控制模式错误</div>
+            <p><strong>排查办法：</strong>使用电机调试软件（K-TECH）检查控制模式是否设置为位置/速度闭环控制（如"Single Loop Angle Control2"）。确认电机已使能（推不动电机表示使能成功）。重新执行电机置零操作（点击"Encoder"中的"Set"和"Save"）。</p>
+            <div class="source">
+                <strong>出处：</strong>文件6第5.2.3节（第37-38页）描述电机置零和使能操作；文件4第12页（第12页）描述电机关闭/停止/运行命令。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">5. 硬件损坏（电机或驱动器故障）</div>
+            <p><strong>排查办法：</strong>更换备用电机或驱动器测试。联系供应商维修（参考文件6第8章质量保证）。</p>
+            <div class="source">
+                <strong>出处：</strong>文件6第8.1节（第57页）提到产品质量保证条款。
+            </div>
+        </div>
+        
+        <div class="note">
+            <strong>注意：</strong>所有答案均严格依据提供的文件内容，未添加任何外部信息或修改。
+        </div>
+    </section>
+    
+    <section id="task-c">
+        <h2>c. 设备运行一段时间后精准度下降的可能原因及排查与解决方案</h2>
+        
+        <div class="problem-item">
+            <div class="problem-title">1. 机械臂坐标系漂移（工具坐标系或用户坐标系未标定准确）</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>重新标定工具坐标系：</strong>使用四点法标定工具坐标系，确保误差不超过±0.3mm（文件6第3.5.1节）。</li>
+                <li><strong>重新标定用户坐标系：</strong>使用三点法标定球桌用户坐标系，确保机器人针尖运动轨迹直线（文件6第3.5.2-3.5.3节）。</li>
+                <li><strong>验证坐标系：</strong>将机器人移至用户坐标系原点，检查位置是否准确。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件6第3.5节（第18-21页）描述坐标系标定和验证；文件7第13-15页（第13-15页）描述机器人到桌面的标定。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">2. 视觉系统标定变化（相机位置移动或参数失真）</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>重新相机标定：</strong>执行粗标定（四角点对应）和精标定（白色标记点），调整相机高度参数（文件6第5.3.2节）。</li>
+                <li><strong>重新颜色分割和Mask设定：</strong>标定桌面和乒乓球颜色阈值，设定Mask区域（文件6第5.3.3-5.3.4节）。</li>
+                <li><strong>验证视觉输出：</strong>运行 <code>./bin/client</code> 确认小球坐标稳定准确。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件6第5.3节（第38-45页）描述视觉参数设置；文件7第16-17页（第16-17页）描述相机标定和颜色分割。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">3. 末端电机零点漂移（电机零点位置变化）</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>重新设置电机零点：</strong>使用电机调试软件（K-TECH）执行"Encoder"中的"Set"和"Save"，断电重启后生效（文件6第5.2.3节）。</li>
+                <li><strong>检查电机控制指令：</strong>确保发送的位置控制指令正确（如单圈/多圈位置闭环命令）。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件6第5.2.3节（第37-38页）描述电机置零；文件4第20-22页（第20-22页）描述位置控制命令格式。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">4. 机械连接松动（机器人底座、末端工具螺栓松动）</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>检查所有螺栓：</strong>特别是机器人底座固定螺栓（M6）、末端法兰连接螺栓（M6）、电机安装螺栓（M3），确保紧固。</li>
+                <li><strong>检查球拍夹持：</strong>确保球拍在夹持工具中无滑动。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件6第3.2节（第15页）描述机械臂安装；第3.6节（第21-24页）描述末端工具安装。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">5. 环境因素干扰（光照变化影响视觉识别）</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>调整光照条件：</strong>确保比赛环境光照均匀，避免反光或阴影。</li>
+                <li><strong>重新颜色分割：</strong>根据当前光照调整颜色阈值。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件6第5.3.3节（第43页）描述颜色分割；文件5《乒乓球机器人比赛经验分享.pdf》第15页（第15页）提到轨迹分析与校准。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">6. 软件参数未自适应校准</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>启用自适应误差修正：</strong>参考经验分享中的 <code>analyzeAndUpdateCalibration</code> 函数，根据击球结果动态调整参数（文件5第15页）。</li>
+                <li><strong>检查超参数：</strong>避免超参数过多，使用调参脚本快速优化（文件5第20页）。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件5第15页（第15页）描述自适应误差修正；第20页（第20页）提到超参数管理。
+            </div>
+        </div>
+        
+        <div class="problem-item">
+            <div class="problem-title">7. 机器人或电机性能下降（长期使用导致磨损）</div>
+            <p><strong>排查与解决方案：</strong></p>
+            <ul class="solution-list">
+                <li><strong>检查机器人版本和SDK：</strong>确认机器人控制器版本为1.7.2，SDK版本为2.2.7（文件6第6.2节）。</li>
+                <li><strong>联系技术支持：</strong>如问题持续，参考质量保证条款维修（文件6第8章）。</li>
+            </ul>
+            <div class="source">
+                <strong>出处：</strong>文件6第6.2节（第48页）描述机器人版本确认；第8.1节（第57页）描述质量保证。
+            </div>
+        </div>
+        
+        <div class="note">
+            <strong>注意：</strong>所有答案均严格依据提供的文件内容，未添加任何外部信息或修改。
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 中国机器人大赛暨RoboCup机器人世界杯中国赛 乒乓球机器人赛项技术委员会</p>
+        <p>本手册内容严格依据比赛官方文档整理</p>
+    </footer>
+</body>
+</html>
