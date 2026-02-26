@@ -53,7 +53,7 @@ def main():
             dl.return_to_the_origin(robot)
             time.sleep(1)
 
-        if choice == '2':
+        elif choice == '2':
             print("\n========== 任务2：整段段绘制横线 ==========")
             dl.draw_horizontal_line(robot, 
                                     x_fixed=350, y_start=-405, y_end=400,z_fixed=400,r_x=-45,r_y=45,
